@@ -27,19 +27,25 @@ VAR
     p1_sch:             SCH;    (* schedule *)
 END_VAR
 
-//start unit from box
+//init
 p1_xStart = p1_xAuto
 p1_xBelimo = p1_xStart
 p1_xPump = Not p1_xSeason
+
+If p1_xAuto = Off Then
+   p1_ahu_mode = ostanov
+End If
+
 
 If p1_xStart = Off And p1_xSeason = Off Then
    p1_hValve = p1_PID_return_water
 End If
 
 //block_unit
-If p1_al_fan Or p1_al_fire Or p1_al_freeze Or p1_al_pump Or p1_al_water Then
+If p1_al_fan = On Or p1_al_fire = On Or p1_al_freeze = On Or p1_al_pump = On Or p1_al_water = On Then
    p1_xBlock_unit = On
-   p1_xBelimo = off
+   p1_xBelimo = Off
+   p1_ahu_mode = BLOCK
 End If
 
 If p1_xBlock_unit = On And p1_xSeason = Off Then
@@ -52,11 +58,14 @@ End If
 
 //start_unit
 p1_xFan = p1_xBelimo OnFor 10S
-If p1_xBelimo = On Then p1_hValve = p1_PID End If
+If p1_xBelimo = On Then
+   p1_hValve = p1_PID
+   p1_ahu_mode = RUN
+End If
 
 //freezing ALARM
 If p1_xBelimo = On Then
-  If (p1_temp_water < 10) Or (p1_temp_air <= 5) Or (p1_xFreeze = On) Then
+  If (p1_temp_water < 10) Or (p1_temp_air <= 5) Then
       p1_al_freeze = On
       p1_hValve = 100
       p1_xPump = On
@@ -64,15 +73,33 @@ If p1_xBelimo = On Then
   End If
 End If
 
-If (p1_temp_water > 40) And (p1_al_freeze = On) And (p1_xFreeze = Off) Then
-    p1_hValve = p1_PID_return_water
+If p1_xFreeze = On Then
+   p1_al_freeze = On
+   p1_hValve = 100
+   p1_xPump = On
+End If
+
+If (p1_xFreeze = Off) And (p1_al_freeze = On) And (p1_temp_water < 40) Then
+    p1_hValve = 100
+    p1_ahu_mode = WARMUP
+    p1_xBelimo = Off
  End If
 
 //motor ALARM
-p1_al_fan = p1_xFan OnFor 30S And p1_xFlow_air OffFor 75S
+If p1_xFan OnFor 30S And p1_xFlow_air OffFor 10S Then
+   p1_al_fan = On
+End If
 
-//heat_pump ALARM
-p1_al_pump = p1_xSeason offFor 10s and p1_xFlow_water offFor30s
+
+//pump ALARM
+If p1_xSeason OffFor 10S And p1_xFlow_water OffFor 30S Then
+   p1_al_pump = On
+End If
+
+
+If p1_xSeason = On Then
+   p1_hValve = 0
+End If
 
 //reseting ALARMS
 IfOnce p1_xReset = On Then
@@ -88,10 +115,12 @@ IfOnce p1_xReset = On Then
  If p1_xSeason = Off Then
     If p1_sch = Off Then
        p1_xBelimo = Off
+       p1_ahu_mode = OSTANOV
        p1_hValve = p1_PID_return_water
     End If
  Else
     If p1_sch = Off Then
        p1_xBelimo = Off
+       p1_ahu_mode = OSTANOV
     End If
   End If

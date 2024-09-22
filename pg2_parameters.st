@@ -1,0 +1,39 @@
+//Default Parameters & Local Variables
+RA_ENTH = Enthalpy (RAH, RAT, °F)
+OA_ENTH = Enthalpy (OAH, OAT, °F)
+
+//Economizer switch
+If OA_ENTH > RA_ENTH Then ECONO = On
+ElseIf  OA_ENTH < (RA_ENTH - 0.5) Then ECONO = Off
+End If
+
+//Virtual fan status
+Switch ( S_FAN_S, S_FAN_A, 10, 3)   //Enter suitable values for fan proving Hz based on actual equipment.
+Switch ( R_FAN_S, R_FAN_A, 8, 3)    //Enter suitable values for fan proving Hz based on actual equipment.
+
+//Average Room Temperature and Humidity, Setpoints
+RT_AVG = Average (RT1, RT2)
+RAH_AVG = Average (RH1, RH2)
+RT_SP = 73
+RAH_SP = 35
+
+ 
+//Schedule Supply Air Temperature Setpoint from Room controller (CO1) 
+SAT_SP = Round (Scale (RT_CO, 0, 0, 95, 100, 55), 1)
+
+//Assign Virtual Heat and Cool Controllers from SAT_CO
+HTGCO = Round (Scale (SAT_CO, 0, 0, 100, 45, 0), 0)      //Lower fraction of SAT_CO to control heating (HTGCO)
+CLGCO = Round (Scale (SAT_CO, 0, 55, 0, 100, 100), 0)    //Upper fraction of SAT_CO to control cooling (CLGCO)
+
+//Preset Minimum OA Percent
+MIN_OA = 25
+
+//Mixed Air Temperature Setpoint MAT_SP
+MAT_SP = SAT_SP - 2
+
+//Virtual Mixed Air Control Based on Economizer and temperature controller
+If ECONO On Then
+   MADCO = MIN_OA
+Else
+   MADCO = Round (Scale (MAT_CO, 0, 0, MIN_OA, 100, 100), 0)
+End If

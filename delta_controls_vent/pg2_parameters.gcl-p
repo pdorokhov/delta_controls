@@ -3,8 +3,10 @@ RA_ENTH = Enthalpy (RAH, RAT, °F)
 OA_ENTH = Enthalpy (OAH, OAT, °F)
 
 //Economizer switch
-If OA_ENTH > RA_ENTH Then ECONO = On
-ElseIf  OA_ENTH < (RA_ENTH - 0.5) Then ECONO = Off
+If OA_ENTH > RA_ENTH Then 
+ECONO = On
+ElseIf  OA_ENTH < (RA_ENTH - 0.5) Then 
+ECONO = Off
 End If
 
 //Virtual fan status

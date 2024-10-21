@@ -1,32 +1,3 @@
-VAR
-    p1_al_fan:          BOOL;    (* alarm fan  *)
-    p1_al_fire:         BOOL;    (* alarm fire *)
-    p1_al_freeze:       BOOL;    (* alarm freeze *)
-    p1_al_pump:         BOOL;    (* alarm pump *)
-    p1_al_water:        BOOL;    (* alarm return water *)
-
-    p1_hValve:          INT;     (* heat valve task *)
-    p1_setpoint_air:    INT;     (* air temperature setpoint *)
-    p1_setpoint_water:  INT;     (* water temperature setpoint *)
-
-    p1_temp_air:        INT;     (* air temperature sensor *)
-    p1_temp_water:      INT;     (* water temperature sensor *)
-
-    p1_xAuto:           BOOL;   (* auto switch *)          
-    p1_xBelimo:         BOOL;   (* damper start *)
-    p1_xBlock_unit:     BOOL;   (* blocking variable *)
-    p1_xFan:            BOOL;   (* motor start *)
-    p1_xFlow_air:       BOOL;   (* air flow sensor *)
-    p1_xFlow_water:     BOOL;   (* water flow sensor *)
-    p1_xFreeze:         BOOL;   (* freeze sensor *)
-    p1_xPump:           BOOL;   (* pump start *)
-    p1_xReset:          BOOL;   (* alarm reset button *)
-    p1_xSeason:         BOOL;   (* season change (off - winter, on - summer) *)
-    p1_xStart:          BOOL;   (* primary start *)
-
-    p1_sch:             SCH;    (* schedule *)
-END_VAR
-
 //init
 p1_xStart = p1_xAuto
 p1_xBelimo = p1_xStart

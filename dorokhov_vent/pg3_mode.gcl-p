@@ -28,10 +28,10 @@ If p1_ahu_mode = BLOCK Then
            p1_ahu_mode = OSTANOV
            p1_xBlock_unit = Off
            p1_al_fan = Off
-            p1_al_fire = Off
-            p1_al_freeze = Off
-            p1_al_pump = Off
-            p1_al_water = Off
+           p1_al_fire = Off
+           p1_al_freeze = Off
+           p1_al_pump = Off
+           p1_al_water = Off
     End If
 End If
 

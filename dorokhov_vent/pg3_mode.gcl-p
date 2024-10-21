@@ -15,7 +15,7 @@ If p1_xBlock_unit = On Then
 End If
 
 
-If p1_ahu_mode = OSTANOV And p1_xSeason = Off And p1_xFreeze = Off And p1_al_freeze = On And p1_temp_water < 40 Then
+If p1_xSeason = Off And p1_xFreeze = Off And p1_al_freeze = On And p1_temp_water < 40 Then
    p1_ahu_mode = WARMUP
 End If
 

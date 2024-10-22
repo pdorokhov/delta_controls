@@ -1,0 +1,4 @@
+If p1_xSeason = On Then
+   p1_hValve = 0
+   p1_humi = Off
+End If

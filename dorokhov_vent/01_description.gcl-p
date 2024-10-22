@@ -24,7 +24,16 @@ VAR
     p1_xSeason:         BOOL;   //(* season change (off - winter, on - summer) *)
     p1_xStart:          BOOL;   //(* primary start *)
 
-    p1_sch:             SCH;    //(* schedule *)
+    p1_xSch:            BOOL;    //(* schedule bool*)
+    p1_disable_schedule:BOOL;    //(* disable schedule bool*)
+
+    p1_timeOFF_hours:   INT;   
+    p1_timeOFF_minutes: INT;
+    p1_timeON_hours:    INT;
+    p1_timeON_minutes:  INT;
+    p1_timeOFF_result:  INT;
+    p1_timeON_result:   INT;
+
 END_VAR
 
 

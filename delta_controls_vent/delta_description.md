@@ -1,22 +1,27 @@
-1. Периоды, когда помещение занято планируются с помощью (SCH1) и (CAL1). Блок запускается оптимально на основе (OS1) и (OS2). Режим работы устройства   задается через MV1 со следующими определенными режимами: 
-- Unoccupied 
-- Occupied 
-- WarmUp 
-- PreCool
-- NiteHtg
-- NiteClg
-- FreezeLock
-- SmkLock
-2. Период, когда помещение занято приточный и вытяжной вентиляторы работают непрерывно (BO1) и (BO2).
-3. Приточный и вытяжной вентиляторы контролируются через входы (AI1) и (AI2).
-4. Пид регулятор комнатной температуры (CO1) планирует заданное значение температуры приточного воздуха (AV2) для поддержания температурных условий в помещении, заданных (AV1). Уставка температуры смешанного воздуха (AV3) запланирована на 2 градуса Цельсия ниже (AV2), чтобы компенсировать работу вентилятора.
-5. Пид регулятор приточного воздуха (CO2) разделен на два виртуальных регулятора (AV5, нагрев) и (AV6, охлаждение) для обеспечения последовательного, не перекрывающегося управления функциями нагрева и охлаждения.
-6. По требованию нагрева виртуальный контроллер клапана теплообменника отопления (AV5) модулирует клапан теплообменника отопления (AO9) для поддержания требуемой температуры приточного воздуха по расписанию (AV2) и по показаниям (AI4). Циркуляционный насос теплообменника (BO3) включается при необходимости отопления.
-7. По требованию охлаждения виртуальный контроллер клапана теплообменника охлаждения (AV6) модулирует клапан теплообменника охлаждения (AO10) для поддержания требуемой температуры приточного воздуха в соответствии с планом (AV2) и показаниями (AI4).
-8. Температура смешанного воздуха, определяемая (AI3), регулирует через пид регулятор (CO3) заслонки смешанного воздуха (AO8) для поддержания заданного значения температуры смешанного воздуха (AV3). Минимальное положение вентиляции будет поддерживаться в соответствии с заданным значением (AV4). Заслонки смешанного воздуха работают в режиме истинного экономайзера, как определено (BV1), переключенным путем сравнения энтальпии потоков наружного и вытяжного воздуха.
-9. Температура и влажность вытяжного воздуха отображаются через (AI5) и (AI6) соответственно. Температура и влажность наружного воздуха отображаются через (AI10) и (AI11) соответственно.
-10. ПИД регулятор (BO4) в режиме занятости модулирует работу клапана увлажнителя (AO7), чтобы удовлетворить условия влажности вытяжного воздуха, определяемые (AI11) и заданные уставкой влажности (AV8).
-11. Состояние воздушного фильтра контролируется датчиком перепада давления (AI7), расположенным на поверхности фильтра. Сигнал тревоги подается, когда давление превышает предел.
-12. При обнаружении низкой температуры датчиком (BI8), расположенным ниже по потоку от нагревательного змеевика, устройство отключается, и для повторного запуска требуется ручной сброс.
-13. Если детектор дыма (BI9), расположенный в потоке вытяжного воздуха, обнаружит задымление, агрегат отключится, и для повторного запуска потребуется ручной сброс.
-14. В незанятые периоды блок будет работать в циклическом режиме, поддерживая в помещении минимальную температуру нагрева (63 градуса по Фаренгейту) или максимальную температуру охлаждения (85 градусов по Фаренгейту). Заслонки OA остаются закрытыми. 
+1)	Occupied periods are scheduled by (SCH1) and (CAL1). The Unit starts optimally based on (OS1) and (OS2). The Unit's mode of operation is scheduled via MV1 with the following defined modes: Unoccupied, Occupied, WarmUp, PreCool, NiteHtg, NiteClg, FreezeLock, SmkLock.
+
+2)	During occupied periods the supply and return fans operate continuously via (BO1) & (BO2) respectively.
+
+3)	Supply fan Amps and return fan Amps are monitored by (AI1) and (AI2) respectively.
+
+4)	Room Temperature Controller (CO1) schedules supply air temperature setpoint (AV2) to maintain satisfy space temperature conditions as set by (AV1). Mixed air temperature setpoint (AV3) is scheduled 2 DegF (Adj.) below (AV2) to compensate for fan pickup.
+
+5)	Supply air temperature controller (CO2) is split into two virtual controllers (AV5, Heating) and (AV6, Cooling) to provide sequential non overlapping control of Heating and Cooling functions.
+
+6)	On Demand for heating, heating coil valve virtual controller (AV5) modulates heating coil valve (AO9) to maintain desired supply air temperature as scheduled by (AV2) and as sensed by (AI4). Heating coil circulator (BO3) will start when heating is needed.
+
+7)	On Demand for cooling, cooling coil valve virtual controller (AV6) modulates cooling coil valve (AO10) to maintain desired supply air temperature as scheduled by (AV2) and as sensed by (AI4).
+ 
+8)	Mixed Air temperature, as sensed by (AI3), modulates via Controller (CO3) the Mixed Air Dampers (AO8) to maintain scheduled Mixed Air Temperature Setpoint (AV3). A minimum ventilation position will be maintained as set by (AV4). The mixed air dampers operate on a true economizer mode as determined by (BV1) switched by the Enthalpy comparison of outdoor and return air streams.
+
+9)	Return air temperature and humidity are displayed through (AI5) and (AI6) respectively. Outdoor air temperature and humidity are displayed through (AI10) and (AI11) respectively.
+
+10)	Controller (BO4) during Occupied Mode modulates the humidifier valve (AO7) to satisfy Return Air Humidity conditions as sensed by (AI11) and as set by Humidity Setpoint (AV8)
+
+11)	Air filter condition is monitored by differential pressure transmitter (AI7) located across the filter surface. An alarm will indicate when pressure exceeds limit.
+  
+12)	Should a low temperature condition be detected by (BI8) located downstream of heating coil, the unit will shut down, requiring manual reset to restart.
+
+13)	Should a smoke condition be detected by Smoke Detector (BI9), located in the return air flow, the unit will shut down, requiring manual reset to restart.
+
+14)	During unoccupied periods the unit will cycle to maintain minimum heating (63 DegF) or maximun cooling (85 DegF) temperature conditions in the space. OA dampers remain closed. 
